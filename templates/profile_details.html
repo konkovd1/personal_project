@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block content%}
+<div class="row justify-content-center">
+    <div class="d-flex">
+        <div class="d-inline p-2 w-50">
+            <img src="{{ profile.picture.url }}"
+                 class="w-50 rounded mx-auto d-block" alt="profile picture">
+        </div>
+        <div class="d-inline p-2 w-50">
+            <div class="d-flex flex-column">
+                <h5><u>Name:</u> {{ profile.first_name }} {{ profile.last_name }}</h5>
+                            <h5><u>Age:</u> {{ profile.age }}</h5>
+
+                {% if profile.description %}
+                    <h5><u>Description:</u> {{ profile.description }}</h5>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
