@@ -87,8 +87,10 @@ class CheckoutView(View):
             return redirect('checkout')
 
 
-@login_required
 def add_to_cart(request, slug):
+    if not request.user.is_authenticated:
+        messages.warning(request, 'You are not logged in')
+        return redirect('shop')
     product = get_object_or_404(Product, slug=slug)
     order_product, created = OrderItem.objects.get_or_create(
         product=product,

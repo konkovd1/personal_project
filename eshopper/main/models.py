@@ -5,9 +5,11 @@ from django.db import models
 from django.urls import reverse
 from django_countries.fields import CountryField
 
+
 def default_random_transaction_id():
     rand_num = random.randrange(1, 1000)
     return rand_num
+
 
 class Customer(models.Model):
     first_name = models.CharField(
@@ -17,7 +19,9 @@ class Customer(models.Model):
     last_name = models.CharField(
         max_length=30,
     )
-    email = models.EmailField()
+    email = models.EmailField(
+        unique=True,
+    )
 
     user = models.OneToOneField(
         User,
@@ -75,6 +79,7 @@ class Product(models.Model):
         return reverse('remove_from_cart', kwargs={
             'slug': self.slug,
         })
+
 
 class OrderItem(models.Model):
     product = models.ForeignKey(
@@ -143,7 +148,8 @@ class Order(models.Model):
     transaction_id = models.CharField(
         max_length=100,
         null=True,
-        default=default_random_transaction_id
+        default=default_random_transaction_id,
+        unique=True,
     )
 
     def __str__(self):
