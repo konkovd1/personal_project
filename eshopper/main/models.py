@@ -1,8 +1,13 @@
+import random
+
 from django.contrib.auth.models import User
 from django.db import models
 from django.urls import reverse
 from django_countries.fields import CountryField
 
+def default_random_transaction_id():
+    rand_num = random.randrange(1, 1000)
+    return rand_num
 
 class Customer(models.Model):
     first_name = models.CharField(
@@ -13,8 +18,6 @@ class Customer(models.Model):
         max_length=30,
     )
     email = models.EmailField()
-
-    age = models.IntegerField()
 
     user = models.OneToOneField(
         User,
@@ -140,6 +143,7 @@ class Order(models.Model):
     transaction_id = models.CharField(
         max_length=100,
         null=True,
+        default=default_random_transaction_id
     )
 
     def __str__(self):
@@ -156,7 +160,7 @@ class Order(models.Model):
         return shipping_price
 
     def get_total_cart(self):
-        total = self.get_sub_total() - self.get_shipping_price()
+        total = self.get_sub_total() + self.get_shipping_price()
         return total
 
 

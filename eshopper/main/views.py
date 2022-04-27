@@ -108,7 +108,7 @@ def add_to_cart(request, slug):
             order.products.add(order_product)
         return redirect('cart')
     else:
-        order = Order.objects.create(customer=request.user)
+        order = Order.objects.create(user=request.user)
         order.products.add(order_product)
         messages.info(request, 'This item was added to your cart')
     return redirect('cart')
