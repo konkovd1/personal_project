@@ -116,8 +116,10 @@ def add_to_cart(request, slug):
     return redirect('cart')
 
 
-@login_required
 def remove_from_cart(request, slug):
+    if not request.user.is_authenticated:
+        messages.warning(request, 'You are not logged in')
+        return redirect('shop')
     product = get_object_or_404(Product, slug=slug)
     order_qs = Order.objects.filter(user=request.user, ordered=False)
     if order_qs.exists():

@@ -34,9 +34,21 @@ class Customer(models.Model):
 
 
 class Product(models.Model):
+    CATEGORIES = (
+        ('dresses', 'dresses'),
+        ('jeans', 'jeans'),
+        ('jackets', 'jackets'),
+        ('T-shirts', 'T-shirts'),
+        ('shoes', 'shoes'),
+    )
     name = models.CharField(
         max_length=100,
         null=True,
+    )
+
+    categories = models.CharField(
+        max_length=100,
+        choices=CATEGORIES,
     )
 
     price = models.FloatField()
