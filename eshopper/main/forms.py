@@ -137,4 +137,25 @@ class ContactForm(BootstrapFormMixin, forms.ModelForm):
     class Meta:
         model = Contact
         fields = '__all__'
-
+        widgets = {
+            'name': forms.TextInput(
+                attrs={
+                    'placeholder': 'Your Name',
+                }
+            ),
+            'email': forms.TextInput(
+                attrs={
+                    'placeholder': 'Your Email',
+                }
+            ),
+            'subject': forms.TextInput(
+                attrs={
+                    'placeholder': 'Subject',
+                }
+            ),
+            'message': forms.TextInput(
+                attrs={
+                    'placeholder': 'Message',
+                }
+            ),
+        }

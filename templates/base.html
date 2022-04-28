@@ -152,7 +152,7 @@
                                 </div>
                             </div>
                         {% endif %}
-                        <a href="contact.html" class="nav-item nav-link">Contact</a>
+                        <a href="{% url 'contact' %}" class="nav-item nav-link">Contact</a>
                     </div>
                     <div class="navbar-nav ml-auto py-0">
                         {% if not request.user.is_authenticated %}
@@ -208,8 +208,10 @@
                             <a class="text-dark mb-2" href="checkout.html"><i
                                     class="fa fa-angle-right mr-2"></i>Checkout</a>
                         {% endif %}
+                        <a class="text-dark mb-2" href="{% url 'contact' %}"><i class="fa fa-angle-right mr-2"></i>Contact Us</a>
                     </div>
                 </div>
+
                 <div class="col-md-4 mb-5">
                     <h5 class="font-weight-bold text-dark mb-4">Newsletter</h5>
                     <form action="">

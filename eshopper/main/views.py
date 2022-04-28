@@ -235,7 +235,7 @@ def contact(request):
         form = ContactForm(request.POST)
         if form.is_valid():
             form.save()
-            messages.info(request, 'Your message have reached us')
+            messages.info(request, 'Than you for your message!')
             return redirect('index')
     else:
         form = ContactForm()
