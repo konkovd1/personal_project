@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from eshopper.main.models import Customer, Product, Order, OrderItem, ShippingAddress
+from eshopper.main.models import Customer, Product, Order, OrderItem, ShippingAddress, Contact
 
 
 @admin.register(Customer)
@@ -25,4 +25,9 @@ class OrderItemAdmin(admin.ModelAdmin):
 
 @admin.register(ShippingAddress)
 class ShippingAddressAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(Contact)
+class ContactAdmin(admin.ModelAdmin):
     pass

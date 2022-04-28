@@ -41,6 +41,14 @@ class Product(models.Model):
         ('T-shirts', 'T-shirts'),
         ('shoes', 'shoes'),
     )
+
+    SIZES = (
+        ('XS', 'XS'),
+        ('S', 'S'),
+        ('M', 'M'),
+        ('L', 'L'),
+        ('XL', 'XL'),
+    )
     name = models.CharField(
         max_length=100,
         null=True,
@@ -49,6 +57,11 @@ class Product(models.Model):
     categories = models.CharField(
         max_length=100,
         choices=CATEGORIES,
+    )
+
+    sizes = models.CharField(
+        max_length=100,
+        choices=SIZES,
     )
 
     price = models.FloatField()
@@ -227,3 +240,17 @@ class ShippingAddress(models.Model):
     date_added = models.DateTimeField(
         auto_now_add=True,
     )
+
+
+class Contact(models.Model):
+    name = models.CharField(
+        max_length=30,
+    )
+
+    email = models.EmailField()
+
+    subject = models.CharField(
+        max_length=30,
+    )
+
+    message = models.TextField()

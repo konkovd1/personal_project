@@ -8,8 +8,12 @@ from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import CreateView, TemplateView, DetailView, ListView
 
-from eshopper.main.forms import CreateProfileForm, CheckoutForm
+from eshopper.main.forms import CreateProfileForm, CheckoutForm, ContactForm
 from eshopper.main.models import Customer, Product, Order, OrderItem
+
+
+def is_valid_queryparam(param):
+    return param != '' and param is not None
 
 
 class HomeView(TemplateView):
@@ -48,11 +52,69 @@ class ProfileDetailsView(DetailView):
     context_object_name = 'profile'
 
 
-class ShopView(ListView):
-    model = Product
-    template_name = 'shop.html'
-    context_object_name = 'products'
-    paginate_by = 5
+def filter(request):
+    qs = Product.objects.all().order_by('-price_with_discount', 'price')
+    name_contains_query = request.GET.get('name_contains')
+    price_until_hundred = request.GET.get('price_until_hundred')
+    price_until_two_hundred = request.GET.get('price_until_two_hundred')
+    price_until_three_hundred = request.GET.get('price_until_three_hundred')
+    price_until_four_hundred = request.GET.get('price_until_four_hundred')
+    price_until_five_hundred = request.GET.get('price_until_five_hundred')
+    size_xs = request.GET.get('size_xs')
+    size_s = request.GET.get('size_s')
+    size_m = request.GET.get('size_m')
+    size_l = request.GET.get('size_l')
+    size_xl = request.GET.get('size_xl')
+
+    if is_valid_queryparam(name_contains_query):
+        qs = qs.filter(name__icontains=name_contains_query)
+
+    if is_valid_queryparam(price_until_hundred):
+        qs = qs.filter(price__range=(0, 100))
+
+    elif is_valid_queryparam(price_until_two_hundred):
+        qs = qs.filter(price__range=(100, 200))
+
+    elif is_valid_queryparam(price_until_three_hundred):
+        qs = qs.filter(price__range=(200, 300))
+
+    elif is_valid_queryparam(price_until_four_hundred):
+        qs = qs.filter(price__range=(300, 400))
+
+    elif is_valid_queryparam(price_until_five_hundred):
+        qs = qs.filter(price__range=(400, 500))
+
+    if is_valid_queryparam(size_xs):
+        qs = qs.filter(sizes__exact='XS')
+
+    elif is_valid_queryparam(size_s):
+        qs = qs.filter(sizes__exact='S')
+
+    elif is_valid_queryparam(size_m):
+        qs = qs.filter(sizes__exact='M')
+
+    elif is_valid_queryparam(size_l):
+        qs = qs.filter(sizes__exact='L')
+
+    elif is_valid_queryparam(size_xl):
+        qs = qs.filter(sizes__exact='XL')
+
+    return qs
+
+
+def shop(request):
+    qs = filter(request)
+    context = {
+        'queryset': qs,
+    }
+    return render(request, 'shop.html', context)
+
+
+# class ShopView(ListView):
+#     model = Product
+#     template_name = 'shop.html'
+#     context_object_name = 'products'
+#     paginate_by = 5
 
 
 class ProductDetailsView(DetailView):
@@ -166,3 +228,18 @@ def decrease_quantity_of_item_from_cart(request, slug):
     else:
         messages.info(request, 'You do not have an active order')
         return redirect('cart')
+
+
+def contact(request):
+    if request.method == 'POST':
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.info(request, 'Your message have reached us')
+            return redirect('index')
+    else:
+        form = ContactForm()
+    context = {
+        'form': form,
+    }
+    return render(request, 'contact.html', context)

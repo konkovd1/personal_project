@@ -4,7 +4,8 @@ from django.contrib.auth.forms import UserCreationForm
 from django.core.exceptions import ValidationError
 from django_countries.fields import CountryField
 
-from eshopper.main.models import Customer
+from eshopper.main.models import Customer, Contact
+
 
 class BootstrapFormMixin:
     fields = {}
@@ -16,6 +17,7 @@ class BootstrapFormMixin:
             if 'class' not in field.widget.attrs:
                 field.widget.attrs['class'] = ''
             field.widget.attrs['class'] += ' form-control'
+
 
 class CreateProfileForm(UserCreationForm):
     first_name = forms.CharField(
@@ -125,3 +127,14 @@ class CheckoutForm(forms.Form, BootstrapFormMixin):
     )
 
     zip_code = forms.CharField()
+
+
+class ContactForm(BootstrapFormMixin, forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._init_bootstrap_form_controls()
+
+    class Meta:
+        model = Contact
+        fields = '__all__'
+
