@@ -39,7 +39,6 @@ class Product(models.Model):
         ('jeans', 'jeans'),
         ('jackets', 'jackets'),
         ('T-shirts', 'T-shirts'),
-        ('shoes', 'shoes'),
     )
 
     SIZES = (
@@ -187,7 +186,7 @@ class Order(models.Model):
         return total
 
     def get_shipping_price(self):
-        shipping_price = self.get_sub_total() * 0.02
+        shipping_price = self.get_sub_total() * 0.01
         return shipping_price
 
     def get_total_cart(self):

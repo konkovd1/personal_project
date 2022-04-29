@@ -4,7 +4,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.core.exceptions import ValidationError
 from django_countries.fields import CountryField
 
-from eshopper.main.models import Customer, Contact
+from eshopper.main.models import Customer, Contact, Order, ShippingAddress
 
 
 class BootstrapFormMixin:
@@ -97,36 +97,39 @@ class CreateProfileForm(UserCreationForm):
         self.fields['last_name'].widget.attrs.update({'placeholder': 'Enter Last Name'})
 
 
-class CheckoutForm(forms.Form, BootstrapFormMixin):
+class CheckoutForm(forms.ModelForm, BootstrapFormMixin):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self._init_bootstrap_form_controls()
 
-    first_name = forms.CharField(
-        max_length=30,
-    )
-
-    last_name = forms.CharField(
-        max_length=30,
-    )
-
-    email = forms.EmailField()
-
-    mobile_phone = forms.CharField(
-        max_length=30,
-    )
-
-    address = forms.CharField(
-        max_length=30,
-    )
-
-    country = CountryField(blank_label='(select country)').formfield()
-
-    city = forms.CharField(
-        max_length=30,
-    )
-
-    zip_code = forms.CharField()
+    class Meta:
+        model = ShippingAddress
+        fields = ('first_name', 'last_name', 'email', 'mobile_phone', 'address', 'country', 'city', 'zip_code',)
+    # first_name = forms.CharField(
+    #     max_length=30,
+    # )
+    #
+    # last_name = forms.CharField(
+    #     max_length=30,
+    # )
+    #
+    # email = forms.EmailField()
+    #
+    # mobile_phone = forms.CharField(
+    #     max_length=30,
+    # )
+    #
+    # address = forms.CharField(
+    #     max_length=30,
+    # )
+    #
+    # country = CountryField(blank_label='(select country)').formfield()
+    #
+    # city = forms.CharField(
+    #     max_length=30,
+    # )
+    #
+    # zip_code = forms.CharField()
 
 
 class ContactForm(BootstrapFormMixin, forms.ModelForm):

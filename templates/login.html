@@ -32,7 +32,7 @@ button:hover {
 
 .cancelbtn {
   width: auto;
-  padding: 10px 18px;
+  padding: 10px 510px;
   background-color: #f44336;
 }
 
@@ -66,8 +66,8 @@ span.psw {
   }
 }
 </style>
-</head>
 <body>
+        <div class="container">
 
 <h2>Login Form</h2>
 
@@ -80,16 +80,16 @@ span.psw {
     {{ form }}
     {% csrf_token %}
     <button type="submit">Login</button>
-    <label>
-      <input type="checkbox" checked="checked" name="remember"> Remember me
-    </label>
+{#    <label>#}
+{#      <input type="checkbox" checked="checked" name="remember"> Remember me#}
+{#    </label>#}
   </div>
 
   <div class="container" style="background-color:#f1f1f1">
-    <button type="button" class="cancelbtn"><a href="{% url 'index' %}">Cancel</a></button>
-    <span class="psw">Forgot <a href="#">password?</a></span>
+    <a class="cancelbtn" href="{% url 'index' %}">Cancel</a>
+{#    <span class="psw">Forgot <a href="#">password?</a></span>#}
   </div>
 </form>
-
+        </div>
 </body>
 {% endblock %}

@@ -6,7 +6,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.views import View
-from django.views.generic import CreateView, TemplateView, DetailView, ListView
+from django.views.generic import CreateView, TemplateView, DetailView
 
 from eshopper.main.forms import CreateProfileForm, CheckoutForm, ContactForm
 from eshopper.main.models import Customer, Product, Order, OrderItem
@@ -109,12 +109,39 @@ def shop(request):
     }
     return render(request, 'shop.html', context)
 
+
 def shop_only_shirts(request):
-    qs = filter(request)
+    qs = Product.objects.filter(categories__exact='T-shirts').order_by('-price_with_discount', 'price')
     context = {
         'queryset': qs,
     }
-    return render(request, 'shop_o', context)
+    return render(request, 'shop_only_shirts.html', context)
+
+
+def shop_only_dresses(request):
+    qs = Product.objects.filter(categories__exact='dresses').order_by('-price_with_discount', 'price')
+    context = {
+        'queryset': qs,
+    }
+    return render(request, 'shop_only_dresses.html', context)
+
+
+def shop_only_jeans(request):
+    qs = Product.objects.filter(categories__exact='jeans').order_by('-price_with_discount', 'price')
+    context = {
+        'queryset': qs,
+    }
+    return render(request, 'shop_only_jeans.html', context)
+
+
+def shop_only_jackets(request):
+    qs = Product.objects.filter(categories__exact='jackets').order_by('-price_with_discount', 'price')
+    context = {
+        'queryset': qs,
+    }
+    return render(request, 'shop_only_jackets.html', context)
+
+
 # class ShopView(ListView):
 #     model = Product
 #     template_name = 'shop.html'
@@ -125,6 +152,12 @@ def shop_only_shirts(request):
 class ProductDetailsView(DetailView):
     model = Product
     template_name = 'product_detail.html'
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # add extra field
+        context['products'] = Product.objects.all()
+        return context
 
 
 class OrderSummaryView(LoginRequiredMixin, View):
@@ -141,17 +174,21 @@ class OrderSummaryView(LoginRequiredMixin, View):
 
 
 class CheckoutView(View):
+
     def get(self, *args, **kwargs):
+        order = Order.objects.get(user=self.request.user, ordered=False)
         form = CheckoutForm()
         context = {
-            'form': form
+            'form': form,
+            'order': order,
         }
         return render(self.request, 'checkout.html', context)
 
     def post(self, *args, **kwargs):
-        form = CheckoutForm(self.request.Post or None)
+        form = CheckoutForm(self.request.POST)
         if form.is_valid():
-            return redirect('checkout')
+            form.save()
+            return redirect('index')
 
 
 def add_to_cart(request, slug):
@@ -167,7 +204,6 @@ def add_to_cart(request, slug):
     order_qs = Order.objects.filter(user=request.user, ordered=False)
     if order_qs.exists():
         order = order_qs[0]
-        # check if order item is in order
         if order.products.filter(product__slug=product.slug).exists():
             order_product.quantity += 1
             order_product.save()
@@ -191,7 +227,6 @@ def remove_from_cart(request, slug):
     order_qs = Order.objects.filter(user=request.user, ordered=False)
     if order_qs.exists():
         order = order_qs[0]
-        # check if order item is in order
         if order.products.filter(product__slug=product.slug).exists():
             order_product = OrderItem.objects.filter(
                 product=product,
@@ -214,7 +249,6 @@ def decrease_quantity_of_item_from_cart(request, slug):
     order_qs = Order.objects.filter(user=request.user, ordered=False)
     if order_qs.exists():
         order = order_qs[0]
-        # check if order item is in order
         if order.products.filter(product__slug=product.slug).exists():
             order_product = OrderItem.objects.filter(
                 product=product,
