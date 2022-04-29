@@ -38,7 +38,7 @@ class Product(models.Model):
         ('dresses', 'dresses'),
         ('jeans', 'jeans'),
         ('jackets', 'jackets'),
-        ('T-shirts', 'T-shirts'),
+        ('shirts', 'shirts'),
     )
 
     SIZES = (

@@ -53,7 +53,7 @@ class ProfileDetailsView(DetailView):
 
 
 def filter(request):
-    qs = Product.objects.all().order_by('-price_with_discount', 'price')
+    qs = Product.objects.all().order_by('price_with_discount', 'price')
     name_contains_query = request.GET.get('name_contains')
     price_until_hundred = request.GET.get('price_until_hundred')
     price_until_two_hundred = request.GET.get('price_until_two_hundred')
