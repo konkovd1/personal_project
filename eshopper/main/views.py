@@ -109,7 +109,12 @@ def shop(request):
     }
     return render(request, 'shop.html', context)
 
-
+def shop_only_shirts(request):
+    qs = filter(request)
+    context = {
+        'queryset': qs,
+    }
+    return render(request, 'shop_o', context)
 # class ShopView(ListView):
 #     model = Product
 #     template_name = 'shop.html'
