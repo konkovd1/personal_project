@@ -31,36 +31,36 @@
 <body>
 <!-- Topbar Start -->
 <div class="container-fluid">
-{#    <div class="row bg-secondary py-2 px-xl-5">#}
-{#        <div class="col-lg-6 d-none d-lg-block">#}
-{#            <div class="d-inline-flex align-items-center">#}
-{#                <a class="text-dark" href="">FAQs</a>#}
-{#                <span class="text-muted px-2">|</span>#}
-{#                <a class="text-dark" href="">Help</a>#}
-{#                <span class="text-muted px-2">|</span>#}
-{#                <a class="text-dark" href="">Support</a>#}
-{#            </div>#}
-{#        </div>#}
-{#        <div class="col-lg-6 text-center text-lg-right">#}
-{#            <div class="d-inline-flex align-items-center">#}
-{#                <a class="text-dark px-2" href="">#}
-{#                    <i class="fab fa-facebook-f"></i>#}
-{#                </a>#}
-{#                <a class="text-dark px-2" href="">#}
-{#                    <i class="fab fa-twitter"></i>#}
-{#                </a>#}
-{#                <a class="text-dark px-2" href="">#}
-{#                    <i class="fab fa-linkedin-in"></i>#}
-{#                </a>#}
-{#                <a class="text-dark px-2" href="">#}
-{#                    <i class="fab fa-instagram"></i>#}
-{#                </a>#}
-{#                <a class="text-dark pl-2" href="">#}
-{#                    <i class="fab fa-youtube"></i>#}
-{#                </a>#}
-{#            </div>#}
-{#        </div>#}
-{#    </div>#}
+    {#    <div class="row bg-secondary py-2 px-xl-5">#}
+    {#        <div class="col-lg-6 d-none d-lg-block">#}
+    {#            <div class="d-inline-flex align-items-center">#}
+    {#                <a class="text-dark" href="">FAQs</a>#}
+    {#                <span class="text-muted px-2">|</span>#}
+    {#                <a class="text-dark" href="">Help</a>#}
+    {#                <span class="text-muted px-2">|</span>#}
+    {#                <a class="text-dark" href="">Support</a>#}
+    {#            </div>#}
+    {#        </div>#}
+    {#        <div class="col-lg-6 text-center text-lg-right">#}
+    {#            <div class="d-inline-flex align-items-center">#}
+    {#                <a class="text-dark px-2" href="">#}
+    {#                    <i class="fab fa-facebook-f"></i>#}
+    {#                </a>#}
+    {#                <a class="text-dark px-2" href="">#}
+    {#                    <i class="fab fa-twitter"></i>#}
+    {#                </a>#}
+    {#                <a class="text-dark px-2" href="">#}
+    {#                    <i class="fab fa-linkedin-in"></i>#}
+    {#                </a>#}
+    {#                <a class="text-dark px-2" href="">#}
+    {#                    <i class="fab fa-instagram"></i>#}
+    {#                </a>#}
+    {#                <a class="text-dark pl-2" href="">#}
+    {#                    <i class="fab fa-youtube"></i>#}
+    {#                </a>#}
+    {#            </div>#}
+    {#        </div>#}
+    {#    </div>#}
     <div class="row align-items-center py-3 px-xl-5">
         <div class="col-lg-3 d-none d-lg-block">
             <a href="{% url 'index' %}" class="text-decoration-none">
@@ -68,28 +68,30 @@
                         class="text-primary font-weight-bold border px-3 mr-1">E</span>Shopper</h1>
             </a>
         </div>
-{#        <div class="col-lg-6 col-6 text-left">#}
-{#            <form action="">#}
-{#                <div class="input-group">#}
-{#                    <input type="text" class="form-control" placeholder="Search for products">#}
-{#                    <div class="input-group-append">#}
-{#                            <span class="input-group-text bg-transparent text-primary">#}
-{#                                <i class="fa fa-search"></i>#}
-{#                            </span>#}
-{#                    </div>#}
-{#                </div>#}
-{#            </form>#}
-{#        </div>#}
-        <div class="col-lg-12 col-6 text-right">
-            <a href="" class="btn border">
-                <i class="fas fa-heart text-primary"></i>
-                <span class="badge">0</span>
-            </a>
-            <a href="{% url 'cart' %}" class="btn border">
-                <i class="fas fa-shopping-cart text-primary"></i>
-                <span class="badge">{{ request.user|cart_item_count }}</span>
-            </a>
-        </div>
+        {#        <div class="col-lg-6 col-6 text-left">#}
+        {#            <form action="">#}
+        {#                <div class="input-group">#}
+        {#                    <input type="text" class="form-control" placeholder="Search for products">#}
+        {#                    <div class="input-group-append">#}
+        {#                            <span class="input-group-text bg-transparent text-primary">#}
+        {#                                <i class="fa fa-search"></i>#}
+        {#                            </span>#}
+        {#                    </div>#}
+        {#                </div>#}
+        {#            </form>#}
+        {#        </div>#}
+        {% if request.user.is_authenticated %}
+            <div class="col-lg-12 col-6 text-right">
+                {#            <a href="" class="btn border">#}
+                {#                <i class="fas fa-heart text-primary"></i>#}
+                {#                <span class="badge">0</span>#}
+                {#            </a>#}
+                <a href="{% url 'cart' %}" class="btn border">
+                    <i class="fas fa-shopping-cart text-primary"></i>
+                    <span class="badge">{{ request.user|cart_item_count }}</span>
+                </a>
+            </div>
+        {% endif %}
     </div>
 </div>
 <!-- Topbar End -->
@@ -107,15 +109,15 @@
             <nav class="collapse show navbar navbar-vertical navbar-light align-items-start p-0 border border-top-0 border-bottom-0"
                  id="navbar-vertical">
                 <div class="navbar-nav w-100 overflow-hidden" style="height: 165px">
-{#                    <div class="nav-item dropdown">#}
-{#                        <a href="#" class="nav-link" data-toggle="dropdown">Dresses <i#}
-{#                                class="fa fa-angle-down float-right mt-1"></i></a>#}
-{#                        <div class="dropdown-menu position-absolute bg-secondary border-0 rounded-0 w-100 m-0">#}
-{#                            <a href="" class="dropdown-item">Men's Dresses</a>#}
-{#                            <a href="" class="dropdown-item">Women's Dresses</a>#}
-{#                            <a href="" class="dropdown-item">Baby's Dresses</a>#}
-{#                        </div>#}
-{#                    </div>#}
+                    {#                    <div class="nav-item dropdown">#}
+                    {#                        <a href="#" class="nav-link" data-toggle="dropdown">Dresses <i#}
+                    {#                                class="fa fa-angle-down float-right mt-1"></i></a>#}
+                    {#                        <div class="dropdown-menu position-absolute bg-secondary border-0 rounded-0 w-100 m-0">#}
+                    {#                            <a href="" class="dropdown-item">Men's Dresses</a>#}
+                    {#                            <a href="" class="dropdown-item">Women's Dresses</a>#}
+                    {#                            <a href="" class="dropdown-item">Baby's Dresses</a>#}
+                    {#                        </div>#}
+                    {#                    </div>#}
                     <a href="{% url 'shop_only_shirts' %}" class="nav-item nav-link">Shirts</a>
                     <a href="{% url 'shop_only_dresses' %}" class="nav-item nav-link">Dresses</a>
                     <a href="{% url 'shop_only_jeans' %}" class="nav-item nav-link">Jeans</a>
@@ -153,7 +155,7 @@
                             <a href="{% url 'register' %}" class="nav-item nav-link">Register</a>
                         {% else %}
                             Welcome {{ user.username }}
-                            <a href="{% url 'profile' request.user.id %}" class="nav-item nav-link">Profile</a>
+{#                            <a href="{% url 'profile' request.user.id %}" class="nav-item nav-link">Profile</a>#}
                             <a href="{% url 'logout' %}" class="nav-item nav-link">Logout</a>
                         {% endif %}
                     </div>
@@ -236,9 +238,9 @@
                                 class="fa fa-angle-right mr-2"></i>Home</a>
                         <a class="text-dark mb-2" href="{% url 'shop' %}"><i class="fa fa-angle-right mr-2"></i>Our Shop</a>
                         {% if request.user.is_authenticated %}
-                            <a class="text-dark mb-2" href="cart.html"><i class="fa fa-angle-right mr-2"></i>Shopping
+                            <a class="text-dark mb-2" href="{% url 'cart' %}"><i class="fa fa-angle-right mr-2"></i>Shopping
                                 Cart</a>
-                            <a class="text-dark mb-2" href="checkout.html"><i
+                            <a class="text-dark mb-2" href="{% url 'checkout' %}"><i
                                     class="fa fa-angle-right mr-2"></i>Checkout</a>
                         {% endif %}
                         <a class="text-dark mb-2" href="{% url 'contact' %}"><i class="fa fa-angle-right mr-2"></i>Contact

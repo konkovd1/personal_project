@@ -81,16 +81,18 @@
 {#                </div>#}
 {#            </form>#}
 {#        </div>#}
+        {% if request.user.is_authenticated %}
         <div class="col-lg-12 col-6 text-right">
-            <a href="" class="btn border">
-                <i class="fas fa-heart text-primary"></i>
-                <span class="badge">0</span>
-            </a>
+{#            <a href="" class="btn border">#}
+{#                <i class="fas fa-heart text-primary"></i>#}
+{#                <span class="badge">0</span>#}
+{#            </a>#}
             <a href="{% url 'cart' %}" class="btn border">
                 <i class="fas fa-shopping-cart text-primary"></i>
                 <span class="badge">{{ request.user|cart_item_count }}</span>
             </a>
         </div>
+        {% endif %}
     </div>
 </div>
 <!-- Topbar End -->
@@ -155,7 +157,7 @@
                             <a href="{% url 'register' %}" class="nav-item nav-link">Register</a>
                         {% else %}
                             Welcome {{ user.username }}
-                            <a href="{% url 'profile' request.user.id %}" class="nav-item nav-link">Profile</a>
+{#                            <a href="{% url 'profile' request.user.id %}" class="nav-item nav-link">Profile</a>#}
                             <a href="{% url 'logout' %}" class="nav-item nav-link">Logout</a>
                         {% endif %}
                     </div>
@@ -198,9 +200,9 @@
                         <a class="text-dark mb-2" href="{% url 'index' %}"><i class="fa fa-angle-right mr-2"></i>Home</a>
                         <a class="text-dark mb-2" href="{% url 'shop' %}"><i class="fa fa-angle-right mr-2"></i>Our Shop</a>
                         {% if request.user.is_authenticated %}
-                            <a class="text-dark mb-2" href="cart.html"><i class="fa fa-angle-right mr-2"></i>Shopping
+                            <a class="text-dark mb-2" href="{% url 'cart' %}"><i class="fa fa-angle-right mr-2"></i>Shopping
                                 Cart</a>
-                            <a class="text-dark mb-2" href="checkout.html"><i
+                            <a class="text-dark mb-2" href="{% url 'checkout' %}"><i
                                     class="fa fa-angle-right mr-2"></i>Checkout</a>
                         {% endif %}
                         <a class="text-dark mb-2" href="{% url 'contact' %}"><i class="fa fa-angle-right mr-2"></i>Contact Us</a>

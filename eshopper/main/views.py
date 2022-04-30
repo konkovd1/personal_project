@@ -111,7 +111,7 @@ def shop(request):
 
 
 def shop_only_shirts(request):
-    qs = Product.objects.filter(categories__exact='T-shirts').order_by('-price_with_discount', 'price')
+    qs = Product.objects.filter(categories__exact='shirts').order_by('-price_with_discount', 'price')
     context = {
         'queryset': qs,
     }
